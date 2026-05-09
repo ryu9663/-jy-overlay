@@ -1,1 +1,2 @@
-export * from "./components/Overlay";
+export { default as Overlay } from "./components/Overlay";
+export type { OverlayProps } from "./components/Overlay";

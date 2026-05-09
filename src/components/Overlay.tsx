@@ -1,6 +1,6 @@
 import React from "react";
 
-interface OverlayProps {
+export interface OverlayProps {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
