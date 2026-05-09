@@ -6,7 +6,7 @@ import CardContent from "@mui/material/CardContent";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { Overlay } from "@ryu9663/overlay";
+import { OverlayProvider } from "@ryu9663/overlay";
 
 export function LibraryPreviewCard() {
   return (
@@ -52,13 +52,13 @@ export function LibraryPreviewCard() {
           </Box>
         </Stack>
       </CardContent>
-      <Overlay isOpen={true} onClose={() => {}}>
+      <OverlayProvider>
         <CardActions sx={{ px: 2, pb: 2 }}>
           <Button fullWidth size="large" variant="contained">
             테스트 시작하기
           </Button>
         </CardActions>
-      </Overlay>
+      </OverlayProvider>
     </Card>
   );
 }

@@ -1,4 +1,4 @@
-@source "./Overlay.tsx";
+@source "./OverlayProvider.tsx";
 @source not "../../playground";
 
 @layer utilities;

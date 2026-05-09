@@ -7,6 +7,8 @@
 - [Component-scoped Tailwind CSS loading](docs/component-scoped-tailwind-css.md)
   - 소비 앱에서 전체 CSS를 import하지 않고 컴포넌트 import만으로 필요한 Tailwind utility CSS를 로드하는 구조
   - `Overlay.css`의 `@source`, `tailwindcss/utilities.css`, Vite CSS 주입, package exports, playground dev/build 분리 설명
+- [TODO: Add subpath exports for component-level JS/CSS splitting](docs/todo/subpath-exports-for-component-css.md)
+  - `@ryu9663/overlay/overlay-provider` 같은 컴포넌트별 import로 사용하는 컴포넌트의 JS/CSS만 로드하기 위한 후속 작업
 
 ## Local notes
 
