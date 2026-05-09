@@ -1,13 +1,18 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
 import { resolve } from 'node:path'
 
-// https://vite.dev/config/
-export default defineConfig({
-  plugins: [react()],
+// Dev server uses source for fast library iteration.
+// Production build intentionally resolves the package entry so it verifies dist output.
+export default defineConfig(({ command }) => ({
+  plugins: command === 'serve' ? [react(), tailwindcss()] : [react()],
   resolve: {
-    alias: {
-      '@ryu9663/overlay': resolve(__dirname, '../src/index.ts'),
-    },
+    alias:
+      command === 'serve'
+        ? {
+            '@ryu9663/overlay': resolve(__dirname, '../src/index.ts'),
+          }
+        : undefined,
   },
-})
+}))
