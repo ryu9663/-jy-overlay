@@ -8,6 +8,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { overlay } from "@ryu9663/overlay";
 import { TestModal } from "./TestModal";
+import { StackedTestModal } from "./StackedTestModal";
 
 export function LibraryPreviewCard() {
   return (
@@ -53,7 +54,7 @@ export function LibraryPreviewCard() {
           </Box>
         </Stack>
       </CardContent>
-      <CardActions sx={{ px: 2, pb: 2 }}>
+      <CardActions sx={{ flexDirection: "column", gap: 1, px: 2, pb: 2 }}>
         <Button
           fullWidth
           size="large"
@@ -64,7 +65,28 @@ export function LibraryPreviewCard() {
             ));
           }}
         >
-          테스트 시작하기
+          단일 모달 열기
+        </Button>
+        <Button
+          fullWidth
+          size="large"
+          variant="outlined"
+          onClick={() => {
+            const openStackedModal = (order: number) => {
+              overlay.open(({ isOpen, close }) => (
+                <StackedTestModal
+                  open={isOpen}
+                  order={order}
+                  onClose={close}
+                  onOpenNext={order < 3 ? () => openStackedModal(order + 1) : undefined}
+                />
+              ));
+            };
+
+            openStackedModal(1);
+          }}
+        >
+          스택 모달 시작하기
         </Button>
       </CardActions>
     </Card>
