@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import { overlay } from "@ryu9663/overlay";
 import { TestModal } from "./TestModal";
 import { StackedTestModal } from "./StackedTestModal";
+import { AnimatedRemoveModal } from "./AnimatedRemoveModal";
 
 export function LibraryPreviewCard() {
   return (
@@ -87,6 +88,18 @@ export function LibraryPreviewCard() {
           }}
         >
           스택 모달 시작하기
+        </Button>
+        <Button
+          fullWidth
+          size="large"
+          variant="outlined"
+          onClick={() => {
+            overlay.open(({ isOpen, close, remove }) => (
+              <AnimatedRemoveModal open={isOpen} onClose={close} onExited={remove} />
+            ));
+          }}
+        >
+          close → remove 예제 열기
         </Button>
       </CardActions>
     </Card>
