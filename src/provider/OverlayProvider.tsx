@@ -1,15 +1,25 @@
-import type { PropsWithChildren } from "react";
+import { Fragment, useSyncExternalStore, type PropsWithChildren } from "react";
 import "./OverlayProvider.css";
+import { overlay } from "../functions/overlay";
 
 export const OverlayProvider = ({ children }: PropsWithChildren) => {
+  const overlays = useSyncExternalStore(
+    overlay.subscribe,
+    overlay.getSnapshot,
+    overlay.getServerSnapshot,
+  );
+
   return (
-    <div className="fixed inset-[0] z-1000 flex h-full w-full items-center justify-center bg-[rgba(0,0,0,0.5)]">
-      <div
-        className="w-[90%] max-w-[500px] rounded-[8px] bg-[#fff] p-[20px]"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {children}
-      </div>
-    </div>
+    <>
+      {children}
+      {overlays.map(({ render, isOpen, id }) => (
+        <Fragment key={id}>
+          {render({
+            isOpen,
+            close: () => overlay.close(id),
+          })}
+        </Fragment>
+      ))}
+    </>
   );
 };
