@@ -21,14 +21,21 @@ export const overlay: OverlayInstance = {
       close() {
         overlay.close(id);
       },
+      remove() {
+        overlay.remove(id);
+      },
     };
   },
 
   close(id: string) {
-    // overlays = overlays.map((overlay) => {
-    //   return overlay.id === id ? { ...overlay, isOpen: false } : overlay;
-    // });
+    overlays = overlays.map((overlay) => {
+      return overlay.id === id ? { ...overlay, isOpen: false } : overlay;
+    });
 
+    notify();
+  },
+
+  remove(id: string) {
     overlays = overlays.filter((overlay) => overlay.id !== id);
     notify();
   },

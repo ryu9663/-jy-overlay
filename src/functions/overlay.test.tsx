@@ -3,15 +3,15 @@ import { afterEach, describe, expect, it } from "vitest";
 import { overlay } from "./overlay";
 import { OverlayProvider } from "../provider/OverlayProvider";
 
-const closeAllOverlays = () => {
+const removeAllOverlays = () => {
   for (const item of overlay.getSnapshot()) {
-    overlay.close(item.id);
+    overlay.remove(item.id);
   }
 };
 
 afterEach(() => {
   act(() => {
-    closeAllOverlays();
+    removeAllOverlays();
   });
 });
 
@@ -39,7 +39,7 @@ describe("overlay", () => {
     expect(screen.getByText("Opened overlay")).toBeInTheDocument();
   });
 
-  it("renderer에 전달된 close를 호출하면 overlay가 제거된다", () => {
+  it("renderer에 전달된 close를 호출하면 overlay가 닫힌다", () => {
     render(<OverlayProvider />);
 
     act(() => {
@@ -59,9 +59,10 @@ describe("overlay", () => {
     });
 
     expect(screen.queryByRole("dialog", { name: "Closable dialog" })).not.toBeInTheDocument();
+    expect(overlay.getSnapshot()[0]?.isOpen).toBe(false);
   });
 
-  it("open이 반환한 controller.close로 overlay를 제거할 수 있다", () => {
+  it("open이 반환한 controller.close로 overlay를 닫을 수 있다", () => {
     render(<OverlayProvider />);
 
     let controller: ReturnType<typeof overlay.open>;
@@ -83,5 +84,33 @@ describe("overlay", () => {
     });
 
     expect(screen.queryByRole("dialog", { name: "Controller dialog" })).not.toBeInTheDocument();
+    expect(overlay.getSnapshot()[0]?.isOpen).toBe(false);
+  });
+
+  it("remove는 overlay item을 store에서 제거한다", () => {
+    act(() => {
+      overlay.open(({ isOpen }) =>
+        isOpen ? (
+          <section aria-label="Removable dialog" role="dialog">
+            Removable overlay
+          </section>
+        ) : null,
+      );
+    });
+
+    expect(overlay.getSnapshot()).toHaveLength(1);
+
+    act(() => {
+      overlay.close(overlay.getSnapshot()[0]!.id);
+    });
+
+    expect(overlay.getSnapshot()).toHaveLength(1);
+    expect(overlay.getSnapshot()[0]?.isOpen).toBe(false);
+
+    act(() => {
+      overlay.remove(overlay.getSnapshot()[0]!.id);
+    });
+
+    expect(overlay.getSnapshot()).toHaveLength(0);
   });
 });

@@ -17,6 +17,7 @@ export const OverlayProvider = ({ children }: PropsWithChildren) => {
           {render({
             isOpen,
             close: () => overlay.close(id),
+            remove: () => overlay.remove(id),
           })}
         </Fragment>
       ))}
