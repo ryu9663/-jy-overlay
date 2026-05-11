@@ -1,6 +1,6 @@
 {
   "name": "@ryu9663/overlay",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple overlay component for React",
   "keywords": [
     "react",
